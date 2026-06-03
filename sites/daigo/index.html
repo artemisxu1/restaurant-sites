@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daigo — Sushi &amp; Omakase · Palo Alto</title>
+<meta name="description" content="Daigo is an intimate sushi bar in Palo Alto serving fresh nigiri, sashimi, and chef's omakase at 2363 Birch St.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14181f;          /* deep ink navy */
+    --ink-soft:#2a3140;
+    --paper:#f5f1e8;        /* warm paper */
+    --paper-2:#ece5d6;
+    --vermilion:#c8472f;    /* accent: Japanese vermilion */
+    --vermilion-dark:#a8371f;
+    --muted:#6f6657;
+    --line:rgba(20,24,31,.12);
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Work Sans",system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-height:1.15}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .accent{color:var(--vermilion)}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--vermilion);font-weight:600;margin-bottom:18px;
+  }
+  .section{padding:96px 0}
+  .section h2{font-size:clamp(2rem,4vw,2.9rem);margin-bottom:14px}
+  .lead{color:var(--muted);max-width:60ch;font-size:1.06rem}
+
+  /* ---- Buttons ---- */
+  .btn{
+    display:inline-block;background:var(--vermilion);color:#fff;
+    padding:15px 34px;border-radius:10px;font-weight:600;letter-spacing:.02em;
+    transition:transform .25s ease, background .25s ease, box-shadow .25s ease;
+    box-shadow:0 6px 18px rgba(200,71,47,.25);
+  }
+  .btn:hover{background:var(--vermilion-dark);transform:translateY(-2px);box-shadow:0 10px 24px rgba(200,71,47,.32)}
+  .btn-ghost{
+    display:inline-block;border:1.5px solid rgba(245,241,232,.5);color:#f5f1e8;
+    padding:13px 30px;border-radius:10px;font-weight:500;transition:all .25s ease;
+  }
+  .btn-ghost:hover{border-color:#f5f1e8;background:rgba(245,241,232,.08)}
+
+  /* ---- Nav ---- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(20,24,31,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(245,241,232,.12);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{font-family:"Playfair Display",serif;font-size:1.5rem;color:#f5f1e8;letter-spacing:.04em}
+  .brand span{color:var(--vermilion)}
+  .nav-links{display:flex;gap:34px;align-items:center}
+  .nav-links a{color:rgba(245,241,232,.82);font-size:.92rem;font-weight:400;transition:color .2s}
+  .nav-links a:hover{color:#fff}
+  .nav-links .btn{padding:10px 22px;box-shadow:none;color:#fff}
+  .nav-toggle{display:none;background:none;border:0;color:#f5f1e8;font-size:1.6rem;cursor:pointer}
+  @media(max-width:780px){
+    .nav-links{
+      position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;
+      background:var(--ink);max-height:0;overflow:hidden;transition:max-height .3s ease;
+      border-bottom:1px solid rgba(245,241,232,.12);
+    }
+    .nav-links.open{max-height:420px}
+    .nav-links a{padding:16px 24px;width:100%;border-top:1px solid rgba(245,241,232,.08)}
+    .nav-links .btn{margin:14px 24px;text-align:center}
+    .nav-toggle{display:block}
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative;min-height:90vh;display:flex;align-items:center;
+    color:#f5f1e8;text-align:center;overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:url("https://cdn.hey-restaurants.com/daigo/9094-albums-1.jpg") center/cover no-repeat;
+    transform:scale(1.05);
+  }
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(20,24,31,.55) 0%,rgba(20,24,31,.6) 50%,rgba(20,24,31,.85) 100%);
+  }
+  .hero-content{position:relative;z-index:2;width:100%;padding:60px 24px}
+  .hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:700;letter-spacing:.02em;margin-bottom:8px}
+  .hero .kana{display:block;font-size:clamp(1rem,2.4vw,1.4rem);letter-spacing:.5em;color:var(--vermilion);font-weight:600;margin-bottom:20px;font-family:"Work Sans",sans-serif}
+  .hero .tag{font-size:clamp(1.05rem,2.4vw,1.4rem);color:rgba(245,241,232,.92);max-width:34ch;margin:0 auto 36px;font-weight:300}
+  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .hero-meta{
+    position:absolute;bottom:26px;left:0;right:0;z-index:2;
+    display:flex;gap:28px;justify-content:center;flex-wrap:wrap;
+    font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,241,232,.75);
+  }
+
+  /* ---- Reveal ---- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---- About ---- */
+  .about{background:var(--paper)}
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  .about p{color:var(--ink-soft);margin-top:20px;font-size:1.06rem}
+  .about-img{position:relative}
+  .about-img img{border-radius:12px;width:100%;height:520px;object-fit:cover;box-shadow:0 24px 50px rgba(20,24,31,.18)}
+  .about-badge{
+    position:absolute;bottom:-26px;left:-26px;background:var(--ink);color:#f5f1e8;
+    padding:24px 30px;border-radius:12px;box-shadow:0 16px 36px rgba(20,24,31,.3);
+  }
+  .about-badge strong{font-family:"Playfair Display",serif;font-size:1.9rem;display:block;color:var(--vermilion)}
+  .about-badge span{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,241,232,.8)}
+  @media(max-width:820px){
+    .about-grid{grid-template-columns:1fr;gap:48px}
+    .about-img img{height:380px}
+    .about-badge{left:24px;bottom:-22px}
+  }
+
+  /* ---- Omakase feature ---- */
+  .omakase{
+    background:var(--ink);color:#f5f1e8;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .omakase .eyebrow{color:var(--vermilion)}
+  .omakase h2{font-size:clamp(2rem,4.4vw,3rem);margin-bottom:18px}
+  .omakase p{color:rgba(245,241,232,.78);max-width:56ch;margin:0 auto 14px;font-size:1.08rem}
+  .omakase .price{font-family:"Playfair Display",serif;font-size:3rem;color:var(--vermilion);margin:28px 0 8px}
+  .omakase .price small{font-size:1rem;color:rgba(245,241,232,.6);letter-spacing:.1em}
+
+  /* ---- Menu ---- */
+  .menu-head{text-align:center;margin-bottom:54px}
+  .menu-head .lead{margin:14px auto 0}
+  .menu-cat{margin-bottom:56px}
+  .menu-cat h3{
+    font-size:1.6rem;display:flex;align-items:baseline;gap:16px;margin-bottom:28px;
+  }
+  .menu-cat h3::after{content:"";flex:1;height:1px;background:var(--line)}
+  .menu-cat .ja{font-size:.95rem;color:var(--vermilion);font-family:"Work Sans",sans-serif;letter-spacing:.2em;font-weight:600}
+  .menu-list{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 56px}
+  @media(max-width:760px){.menu-list{grid-template-columns:1fr}}
+  .menu-item{display:flex;justify-content:space-between;gap:18px;padding:14px 0;border-bottom:1px dotted var(--line);align-items:baseline}
+  .mi-left{min-width:0}
+  .mi-name{font-weight:600;font-size:1.02rem}
+  .mi-desc{color:var(--muted);font-size:.9rem;line-height:1.45}
+  .mi-price{font-family:"Playfair Display",serif;font-weight:600;color:var(--vermilion);white-space:nowrap}
+  .menu-note{text-align:center;color:var(--muted);font-size:.9rem;margin-top:8px}
+
+  /* ---- Gallery ---- */
+  .gallery{background:var(--paper-2)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:240px;gap:14px}
+  .grid figure{overflow:hidden;border-radius:12px;background:var(--ink-soft)}
+  .grid img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .grid figure:hover img{transform:scale(1.07)}
+  .grid .tall{grid-row:span 2}
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}}
+  @media(max-width:520px){.grid{grid-template-columns:1fr;grid-auto-rows:240px}.grid .tall{grid-row:span 1}}
+
+  /* ---- Reviews ---- */
+  .reviews{background:var(--ink);color:#f5f1e8}
+  .reviews .menu-head h2,.reviews .eyebrow{color:inherit}
+  .reviews .eyebrow{color:var(--vermilion)}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:860px){.rev-grid{grid-template-columns:1fr;max-width:620px;margin:0 auto}}
+  .rev-card{
+    background:rgba(245,241,232,.05);border:1px solid rgba(245,241,232,.12);
+    border-radius:14px;padding:34px 30px;transition:transform .3s ease,border-color .3s ease;
+  }
+  .rev-card:hover{transform:translateY(-4px);border-color:rgba(200,71,47,.5)}
+  .rev-card .stars{color:var(--vermilion);letter-spacing:.18em;margin-bottom:16px}
+  .rev-card p{font-family:"Playfair Display",serif;font-style:italic;font-size:1.12rem;line-height:1.5;color:rgba(245,241,232,.95)}
+  .rev-card .who{margin-top:20px;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,241,232,.6)}
+
+  /* ---- Visit / footer ---- */
+  .visit{background:var(--paper)}
+  .visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}
+  @media(max-width:820px){.visit-grid{grid-template-columns:1fr;gap:44px}}
+  .info-row{display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .info-row .ic{color:var(--vermilion);font-size:1.3rem;flex-shrink:0;width:28px;text-align:center}
+  .info-row h4{font-family:"Work Sans",sans-serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:600}
+  .info-row p,.info-row a{font-size:1.02rem;color:var(--ink)}
+  .info-row a:hover{color:var(--vermilion)}
+  .hours-line{display:flex;justify-content:space-between;max-width:320px;padding:5px 0;font-size:.98rem}
+  .hours-line.closed{color:var(--muted)}
+  .hours-line span:first-child{font-weight:500}
+  .visit-cta{margin-top:30px}
+  .map-embed{border-radius:14px;overflow:hidden;min-height:380px;box-shadow:0 20px 44px rgba(20,24,31,.16)}
+  .map-embed iframe{width:100%;height:100%;min-height:380px;border:0;display:block}
+
+  footer{background:var(--ink);color:rgba(245,241,232,.7);text-align:center;padding:54px 24px 40px}
+  footer .brand{font-size:1.8rem;display:block;margin-bottom:10px}
+  footer .fsoc{display:flex;gap:24px;justify-content:center;margin:22px 0;flex-wrap:wrap}
+  footer .fsoc a{color:rgba(245,241,232,.8);font-size:.9rem;letter-spacing:.1em}
+  footer .fsoc a:hover{color:var(--vermilion)}
+  footer .fine{font-size:.8rem;color:rgba(245,241,232,.45);margin-top:14px}
+</style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">Daigo<span>.</span></a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
+    <div class="nav-links" id="navlinks">
+      <a href="#about">About</a>
+      <a href="#omakase">Omakase</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#visit">Visit</a>
+      <a href="tel:+16503846880" class="btn">Reserve</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="kana">醍醐 · PALO ALTO</span>
+    <h1>Daigo</h1>
+    <p class="tag">An intimate sushi counter where the day's freshest catch meets the quiet craft of Japan.</p>
+    <div class="hero-cta">
+      <a href="tel:+16503846880" class="btn">Reserve a Seat</a>
+      <a href="#menu" class="btn-ghost">View the Menu</a>
+    </div>
+  </div>
+  <div class="hero-meta">
+    <span>Sushi &amp; Omakase</span>
+    <span>·</span>
+    <span>2363 Birch St</span>
+    <span>·</span>
+    <span>Dinner Tue–Sun</span>
+  </div>
+</header>
+
+<!-- ===== ABOUT ===== -->
+<section class="section about" id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <div class="eyebrow">Our Story</div>
+      <h2>A little corner of Japan on Birch Street</h2>
+      <p>Set just off California Avenue, Daigo is a small, unhurried sushi bar built around a single idea: let exceptional fish speak for itself. Slide up to the counter and you'll watch each piece shaped to order, the chef talking you through where the catch came from and how to enjoy it.</p>
+      <p>The room is warm and easygoing — equally suited to a quiet date night or a relaxed gathering with friends. With counter seats, a handful of tables, and dog-friendly seating outside, everyone is welcome here. What keeps regulars coming back is the rare combination Daigo manages to strike: serious, market-fresh sushi served with genuine warmth, and prices that feel fair for Palo Alto.</p>
+    </div>
+    <div class="about-img reveal">
+      <img src="https://cdn.hey-restaurants.com/daigo/9094-albums-2.jpg" alt="The sushi counter at Daigo">
+      <div class="about-badge">
+        <strong>Omakase</strong>
+        <span>Chef's Daily Selection</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OMAKASE FEATURE ===== -->
+<section class="section omakase" id="omakase">
+  <div class="wrap reveal">
+    <div class="eyebrow">The Counter Experience</div>
+    <h2>Omakase — leave it to the chef</h2>
+    <p>Our signature tasting is a daily journey through the best fish to arrive that morning. Each course is composed at the counter to spotlight the seafood at its peak, opening with a silky chawanmushi egg custard and closing with house-made yuzu cheesecake.</p>
+    <div class="price">$110 <small>/ full experience</small></div>
+    <p style="font-size:.95rem">Prefer something shorter? Ask about our 12-piece omakase, finished with your choice of uni or wagyu and a hand roll.</p>
+    <div style="margin-top:32px"><a href="tel:+16503846880" class="btn">Call to Reserve</a></div>
+  </div>
+</section>
+
+<!-- ===== MENU ===== -->
+<section class="section" id="menu">
+  <div class="wrap">
+    <div class="menu-head reveal">
+      <div class="eyebrow">À la Carte</div>
+      <h2>The Menu</h2>
+      <p class="lead">A selection from our offerings. Availability changes with the daily market — ask your server about today's specials.</p>
+    </div>
+
+    <!-- Appetizers -->
+    <div class="menu-cat reveal">
+      <h3>Appetizers <span class="ja">前菜</span></h3>
+      <div class="menu-list">
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Hamachi Crudo</div><div class="mi-desc">Yellowtail, red onion, arugula, ginger-jalapeño ponzu</div></div><div class="mi-price">$22</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Hamachi Shot</div><div class="mi-desc">Yellowtail, onion, quail egg, tobiko, avocado, truffle ponzu</div></div><div class="mi-price">$8.25</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Asari Butter Sakamushi</div><div class="mi-desc">Steamed Manila clams, sake, butter, garlic soy</div></div><div class="mi-price">$22</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Hamachi Kama</div><div class="mi-desc">Grilled yellowtail collar</div></div><div class="mi-price">$29</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Salmon Crudo</div><div class="mi-desc">Scottish salmon, capers, red onion, arugula, yuzu vinaigrette</div></div><div class="mi-price">$20</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Agedashi Tofu</div><div class="mi-desc">Deep-fried tofu in savory dashi</div></div><div class="mi-price">$16.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Tori Karaage</div><div class="mi-desc">Japanese fried chicken</div></div><div class="mi-price">$17.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Eryngi Tempura</div><div class="mi-desc">King oyster mushroom, truffle salt, aonori</div></div><div class="mi-price">$15</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Soft Shell Crab Nanbanzuke</div><div class="mi-desc">Fried soft-shell crab, dashi vinegar, vegetables</div></div><div class="mi-price">$20</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Kinoko Salad</div><div class="mi-desc">Sautéed mushrooms, soy-dashi vinaigrette, bonito, crispy onions</div></div><div class="mi-price">$17.50</div></div>
+      </div>
+    </div>
+
+    <!-- Nigiri -->
+    <div class="menu-cat reveal">
+      <h3>Nigiri <span class="ja">握り</span></h3>
+      <div class="menu-list">
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Toro — Fatty Tuna</div></div><div class="mi-price">$12.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Akami — Bluefin Tuna</div></div><div class="mi-price">$9</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Uni — Sea Urchin (Hokkaido)</div></div><div class="mi-price">$17</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Wagyu — Satsuma (Kagoshima)</div></div><div class="mi-price">$17</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Hamachi Toro — Yellowtail Belly</div></div><div class="mi-price">$7.10</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Sake Toro — Salmon Belly</div></div><div class="mi-price">$7.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Ji-Kinmedai — Golden Eye Snapper</div></div><div class="mi-price">$12</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Hotate — Hokkaido Scallop</div></div><div class="mi-price">$6</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Amaebi — Spot Prawn</div></div><div class="mi-price">$11.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Ikura — Salmon Roe</div></div><div class="mi-price">$8.25</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Unagi — Barbecue Eel</div></div><div class="mi-price">$6</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Tamago — Egg Omelette</div></div><div class="mi-price">$4.60</div></div>
+      </div>
+      <p class="menu-note reveal">Prefer a set? <strong>Nigiri Dinner</strong> $55.25 · <strong>Premium Nigiri Dinner</strong> $86.50 · <strong>Moriawase Nigiri</strong> $51</p>
+    </div>
+
+    <!-- Sashimi -->
+    <div class="menu-cat reveal">
+      <h3>Sashimi <span class="ja">刺身</span></h3>
+      <div class="menu-list">
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Toro — Fatty Tuna</div></div><div class="mi-price">$31</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Uni — Sea Urchin (Hokkaido)</div></div><div class="mi-price">$48</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Amaebi — Spot Prawn</div></div><div class="mi-price">$27</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Akami — Bluefin Tuna</div></div><div class="mi-price">$23</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Kanpachi — Amberjack</div></div><div class="mi-price">$19.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Sake Toro — Salmon Belly</div></div><div class="mi-price">$19.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Umimasu — Ocean Trout</div></div><div class="mi-price">$19.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Binnaga — Albacore Tuna</div></div><div class="mi-price">$16</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Saba — Norwegian Mackerel</div></div><div class="mi-price">$14</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Moriawase — Chef's Assortment</div><div class="mi-desc">Tuna, yellowtail, salmon, albacore, scallop (2pc each)</div></div><div class="mi-price">$49.50</div></div>
+      </div>
+    </div>
+
+    <!-- Maki & Temaki -->
+    <div class="menu-cat reveal">
+      <h3>Maki &amp; Hand Rolls <span class="ja">巻物</span></h3>
+      <div class="menu-list">
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Dragon</div><div class="mi-desc">Shrimp tempura, BBQ eel, avocado</div></div><div class="mi-price">$24.25</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Rainbow</div><div class="mi-desc">California roll topped with assorted fish</div></div><div class="mi-price">$24.25</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Baked Salmon</div><div class="mi-desc">CA roll, salmon, spicy aioli, tobiko, scallions</div></div><div class="mi-price">$24.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Naruto</div><div class="mi-desc">Spicy tuna, hamachi, salmon, avocado in cucumber, garlic ponzu</div></div><div class="mi-price">$17.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Aburi Saba</div><div class="mi-desc">Seared mackerel, tempura green onion, ginger, avocado, spicy radish</div></div><div class="mi-price">$22</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Hamachi Jalapeño</div><div class="mi-desc">Yellowtail, soy-pickled jalapeños</div></div><div class="mi-price">$16.25</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Spicy Tuna Temaki</div><div class="mi-desc">Spicy tuna, cucumber</div></div><div class="mi-price">$10.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Negitoro Temaki</div><div class="mi-desc">Fatty tuna, scallion</div></div><div class="mi-price">$14.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Blue Crab Temaki</div><div class="mi-desc">Blue crab with crab butter</div></div><div class="mi-price">$12</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Shrimp Tempura Temaki</div><div class="mi-desc">Tempura shrimp, avocado, unagi sauce</div></div><div class="mi-price">$10.50</div></div>
+      </div>
+    </div>
+
+    <!-- Donburi & Dessert -->
+    <div class="menu-cat reveal">
+      <h3>Donburi &amp; Dessert <span class="ja">丼 · 甘味</span></h3>
+      <div class="menu-list">
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Bara Chirashi</div><div class="mi-desc">Rice with assorted sashimi, miso soup</div></div><div class="mi-price">$50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Sake Oyako Don</div><div class="mi-desc">Salmon sashimi &amp; marinated roe over rice, miso soup</div></div><div class="mi-price">$42.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Negihama Don</div><div class="mi-desc">Yellowtail sashimi &amp; scallion over rice, miso soup</div></div><div class="mi-price">$42.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Yuzu Cheesecake</div></div><div class="mi-price">$6</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Green Tea Cheesecake</div></div><div class="mi-price">$6.50</div></div>
+        <div class="menu-item"><div class="mi-left"><div class="mi-name">Black Sesame Cheesecake</div></div><div class="mi-price">$6.50</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section class="section gallery" id="gallery">
+  <div class="wrap">
+    <div class="menu-head reveal">
+      <div class="eyebrow">The Experience</div>
+      <h2>Inside Daigo</h2>
+    </div>
+    <div class="grid reveal">
+      <figure class="tall"><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-3.jpg" alt="Plated sushi at Daigo" loading="lazy"></figure>
+      <figure><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-4.jpg" alt="Fresh nigiri selection" loading="lazy"></figure>
+      <figure><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-5.jpg" alt="Sashimi presentation" loading="lazy"></figure>
+      <figure><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-6.jpg" alt="Chef at the counter" loading="lazy"></figure>
+      <figure class="tall"><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-7.jpg" alt="Omakase course" loading="lazy"></figure>
+      <figure><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-8.jpg" alt="Hand roll" loading="lazy"></figure>
+      <figure><img src="https://cdn.hey-restaurants.com/daigo/9094-albums-9.jpg" alt="Dining room detail" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section class="section reviews" id="reviews">
+  <div class="wrap">
+    <div class="menu-head reveal">
+      <div class="eyebrow">What Guests Say</div>
+      <h2>From the Counter</h2>
+    </div>
+    <div class="rev-grid">
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The fish is incredibly fresh and the service is quick and friendly — exactly what you want from a neighborhood sushi spot."</p>
+        <div class="who">— Yelp Diner</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Quality fish at reasonable prices for Palo Alto sushi — it's become a worthwhile regular for us."</p>
+        <div class="who">— Lynna O.</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The omakase is perfect for date night, and the chef's explanation of each bite makes the whole meal."</p>
+        <div class="who">— TripAdvisor</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"A cozy, casual neighborhood vibe with a counter where you can watch every piece come together."</p>
+        <div class="who">— Restaurantji</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Each plate is crafted to highlight how fresh the seafood really is. The fish absolutely shines."</p>
+        <div class="who">— Google Review</div>
+      </div>
+      <div class="rev-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Delicious, excellent quality, and an authentic omakase feel. Easily one of our favorites in the area."</p>
+        <div class="who">— Yelp Diner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VISIT ===== -->
+<section class="section visit" id="visit">
+  <div class="wrap">
+    <div class="menu-head reveal" style="text-align:left">
+      <div class="eyebrow">Plan Your Visit</div>
+      <h2>Find Us</h2>
+    </div>
+    <div class="visit-grid">
+      <div class="reveal">
+        <div class="info-row">
+          <div class="ic">◎</div>
+          <div><h4>Address</h4>
+            <p><a href="https://maps.google.com/?q=2363+Birch+St+%23B,+Palo+Alto,+CA+94306" target="_blank" rel="noopener">2363 Birch St #B, Palo Alto, CA 94306</a></p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="ic">☎</div>
+          <div><h4>Reservations</h4>
+            <p><a href="tel:+16503846880">(650) 384-6880</a> &nbsp;·&nbsp; please call between 1–5 PM</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="ic">◷</div>
+          <div style="flex:1"><h4>Hours</h4>
+            <div class="hours-line closed"><span>Monday</span><span>Closed</span></div>
+            <div class="hours-line"><span>Tue – Thu</span><span>5:00 – 9:00 PM</span></div>
+            <div class="hours-line"><span>Friday</span><span>5:00 – 9:30 PM</span></div>
+            <div class="hours-line"><span>Saturday</span><span>12–3 PM · 5:00–9:30 PM</span></div>
+            <div class="hours-line"><span>Sunday</span><span>12–3 PM · 5:00–9:00 PM</span></div>
+          </div>
+        </div>
+        <div class="visit-cta">
+          <a href="tel:+16503846880" class="btn">Call to Reserve</a>
+        </div>
+      </div>
+      <div class="map-embed reveal">
+        <iframe
+          title="Map to Daigo"
+          src="https://www.google.com/maps?q=2363+Birch+St,+Palo+Alto,+CA+94306&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <span class="brand">Daigo<span class="accent">.</span></span>
+  <p>Sushi &amp; Omakase · 2363 Birch St #B, Palo Alto, CA 94306</p>
+  <div class="fsoc">
+    <a href="tel:+16503846880">(650) 384-6880</a>
+    <a href="https://www.yelp.com/biz/daigo-palo-alto" target="_blank" rel="noopener">Yelp</a>
+    <a href="https://www.instagram.com/reel/C204krxR1IF/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tripadvisor.com/Restaurant_Review-g32849-d19991295-Reviews-Daigo-Palo_Alto_California.html" target="_blank" rel="noopener">TripAdvisor</a>
+  </div>
+  <p class="fine">© 2026 Daigo Palo Alto. Site concept for demonstration — imagery and quotes pending licensing &amp; approval.</p>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Close mobile menu on link tap
+  document.querySelectorAll('#navlinks a').forEach(a=>{
+    a.addEventListener('click',()=>document.getElementById('navlinks').classList.remove('open'));
+  });
+</script>
+
+<!--
+  ============================================================
+  SOURCES — verify licensing & swap in approved assets
+  ============================================================
+  PRIMARY / DATA
+  - https://daigo.res-menu.net/            (official menu site — returned 403 to fetch)
+  - https://daigo.res-menu.net/menu        (menu)
+  - https://daigo.hey-restaurants.com/      (mirror — name, address, hours, sample menu, images)
+  - https://daigo.hey-restaurants.com/menu  (full menu w/ descriptions & prices)
+  - https://www.yelp.com/biz/daigo-palo-alto
+  - https://www.restaurantji.com/ca/palo-alto/daigo-/   (reviews, atmosphere)
+  - https://www.tripadvisor.com/Restaurant_Review-g32849-d19991295-Reviews-Daigo-Palo_Alto_California.html
+
+  IMAGES (all from hey-restaurants CDN — confirm rights before publishing)
+  - https://cdn.hey-restaurants.com/daigo/9094-albums-1.jpg   (hero)
+  - https://cdn.hey-restaurants.com/daigo/9094-albums-2.jpg   (about)
+  - https://cdn.hey-restaurants.com/daigo/9094-albums-3.jpg through -9.jpg  (gallery)
+
+  REVIEW QUOTES
+  - Paraphrased/condensed from Yelp, TripAdvisor, Google & Restaurantji aggregated highlights.
+    "Lynna O." referenced in user-provided Yelp summary. Verify exact wording/attribution before publishing.
+
+  PLACEHOLDERS / NOT FOUND
+  - Email address: not published anywhere found.
+  - Exact gallery image subjects unverified (CDN filenames only) — alt text is descriptive, confirm before use.
+  - Instagram link points to a single reel found in listings; confirm official handle.
+  - $110 omakase (user-provided / listings) vs. $87 12-pc omakase (menu) — both shown; verify current pricing.
+  ============================================================
+-->
+</body>
+</html>
